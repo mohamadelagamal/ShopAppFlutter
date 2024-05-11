@@ -23,24 +23,18 @@ class ShopLayout extends StatelessWidget {
           appBar: AppBar(
             title: Text(cubit.titles[cubit.currentIndex]),
             actions: [
-              IconButton(
-                icon: Icon(Icons.search),
-                onPressed: () {
-                  navigateTo(context, SearchScreen());
-                },
+              Padding(
+                padding: const EdgeInsets.only(
+                  right: 18.0,
+                ),
+                child: IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    navigateTo(context, SearchScreen());
+                  },
+                ),
               ),
-              IconButton(
-                icon: Icon(Icons.favorite),
-                onPressed: () {
-                  navigateTo(context, FavouritesScreen());
-                },
-              ),
-              IconButton(
-                icon: Icon(Icons.category),
-                onPressed: () {
-                  navigateTo(context, CategoriesScreen());
-                },
-              ),
+
             ],
           ),
           body: cubit.bottomScreens[cubit.currentIndex],

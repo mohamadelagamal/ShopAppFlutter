@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:shop_app/layout/shop_layout.dart';
 import 'package:shop_app/modules/basics/conditional_builder.dart';
 import 'package:shop_app/shared/components/components.dart';
 import 'package:shop_app/shared/components/constants.dart';
@@ -22,7 +23,6 @@ class ShopLoginScreen extends StatelessWidget {
       create: (BuildContext context) => ShopLoginCubit(),
       child: BlocConsumer<ShopLoginCubit, ShopLoginStates>(
         listener: (context, state) {
-          //showToast(text: state.toString(), state: ToastStates.ERROR);
           if (state is ShopLoginSuccessState) {
             if (state.loginModel.status!) {
               CacheHelper.saveData(
@@ -31,12 +31,14 @@ class ShopLoginScreen extends StatelessWidget {
               ).then((value) {
                 // refresh the token value in the cache
                 token = state.loginModel.data!.token!;
-                navigateAndFinish(context, ShopRegisterScreen());
+                navigateAndFinish(context, ShopLayout());
               });
             } else {
               showToast(
                   text: state.loginModel.message!, state: ToastStates.ERROR);
             }
+          } else if (state is ShopLoginErrorState) {
+            showToast(text: state.error, state: ToastStates.ERROR);
           }
         },
         builder: (context, state) {

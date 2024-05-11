@@ -58,3 +58,16 @@ class ShopLayoutSuccessProfileDataState extends ShopLayoutStates {
 }
 // 3- error
 class ShopLayoutErrorProfileDataState extends ShopLayoutStates {}
+
+// update data from API Profile data
+// 1- loading
+class ShopLayoutUpdateLoadingProfileDataState extends ShopLayoutStates {}
+// 2- success
+class ShopLayoutUpdateSuccessProfileDataState extends ShopLayoutStates {
+  final ShopLoginModel shopLoginModel;
+
+  ShopLayoutUpdateSuccessProfileDataState(this.shopLoginModel);
+}
+// 3- error
+class ShopLayoutUpdateErrorProfileDataState extends ShopLayoutStates {}
+

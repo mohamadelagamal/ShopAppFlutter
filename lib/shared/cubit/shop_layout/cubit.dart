@@ -16,6 +16,7 @@ import '../../../modules/search/search_screen.dart';
 import '../../../modules/settings/settings_screen.dart';
 import '../../components/constants.dart';
 import '../../network/end_points.dart';
+import '../../network/local/cache_helper.dart';
 import '../../network/remote/dio_helper.dart';
 
 class ShopLayoutCubit extends Cubit<ShopLayoutStates> {
@@ -116,16 +117,19 @@ class ShopLayoutCubit extends Cubit<ShopLayoutStates> {
     });
   }
 
-  void getFavorites() {
+  void getToken() {
+    token = CacheHelper.getData(key: 'token');
+  }
 
+  void getFavorites() {
     emit(ShopLayoutGetLoadingFavoritesDataState());
     // get Data from API
     DioHelper.getData(path: FAVOURITES, token: token)
         .then((value) => {
-      favouritesModel = FavoritesModel.fromJson(value.data),
-       printFullText(value.data.toString()),
-      emit(ShopLayoutGetSuccessFavoritesDataState()),
-    })
+              favouritesModel = FavoritesModel.fromJson(value.data),
+              printFullText(value.data.toString()),
+              emit(ShopLayoutGetSuccessFavoritesDataState()),
+            })
         .catchError((error) {
       print(error.toString());
       emit(ShopLayoutGetErrorFavoritesDataState());
@@ -137,12 +141,34 @@ class ShopLayoutCubit extends Cubit<ShopLayoutStates> {
     DioHelper.getData(path: PROFILE, token: token)
         .then((value) => {
               userModel = ShopLoginModel.fromJson(value.data),
-      print(userModel!.data!.name),
+              print(userModel!.data!.name),
               emit(ShopLayoutSuccessProfileDataState(userModel!)),
             })
         .catchError((error) {
       print(error.toString());
       emit(ShopLayoutErrorProfileDataState());
+    });
+  }
+  void updateUserData({
+required String name,
+    required String email,
+    required String phone,
+  }) {
+    emit(ShopLayoutUpdateLoadingProfileDataState());
+    DioHelper.putData(
+      path: UPDATE_PROFILE,
+      data: {
+        'name': name,
+        'email': email,
+        'phone': phone,
+      },
+      token: token,
+    ).then((value) {
+      userModel = ShopLoginModel.fromJson(value.data);
+      emit(ShopLayoutUpdateSuccessProfileDataState(userModel!));
+    }).catchError((error) {
+      print(error.toString());
+      emit(ShopLayoutUpdateErrorProfileDataState());
     });
   }
 

@@ -30,7 +30,7 @@ void main() async{
   Widget widget;
   bool? isDark = CacheHelper.getData(key: 'isDark');
   bool? onBoarding = CacheHelper.getData(key: 'onBoarding');
-  token = CacheHelper.getData(key: 'token');
+  token = await CacheHelper.getData(key: 'token');
 
   print('token: $token');
 
@@ -62,7 +62,7 @@ class MyApp extends StatelessWidget {
           BlocProvider(
               create: (context) =>
               AppCubit()..changeAppMode(fromShared: false)),
-          BlocProvider(create: (context) => ShopLayoutCubit()..getHomeData()..getCategoriesData()..getFavorites()..getUserData()),
+          BlocProvider(create: (context) => ShopLayoutCubit()..getHomeData()..getCategoriesData()..getFavorites()..getUserData()..getToken()),
         ],
         child: BlocConsumer<AppCubit, AppStates>(
             listener: (context, state) {},

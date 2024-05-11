@@ -25,7 +25,7 @@ class FavouritesScreen extends StatelessWidget {
           builder:(context)=> ListView.separated(
             physics: BouncingScrollPhysics(),
             itemBuilder: (context, index) => buildFavouritesItem(
-                cubit.favouritesModel!.data!.data![index], context),
+                cubit.favouritesModel!.data!.data![index].product!, context),
             separatorBuilder: (context, index) => Divider(),
             itemCount: cubit.favouritesModel!.data!.data!.length,
           ),
@@ -37,7 +37,7 @@ class FavouritesScreen extends StatelessWidget {
     );
   }
 
-  Widget buildFavouritesItem(FavouritesData favoritesModel, context) => Padding(
+  Widget buildFavouritesItem(Product favoritesModel, context) => Padding(
         padding: const EdgeInsets.all(20.0),
         child: Container(
           height: 120.0,
@@ -48,12 +48,12 @@ class FavouritesScreen extends StatelessWidget {
                 alignment: AlignmentDirectional.bottomStart,
                 children: [
                   Image(
-                    image: NetworkImage('${favoritesModel.product!.image}'),
+                    image: NetworkImage('${favoritesModel!.image}'),
                     width: 120,
                     height: 120.0,
 
                   ),
-                  if (favoritesModel.product!.discount != 0)
+                  if (favoritesModel!.discount != 0)
                     Container(
                       color: Colors.red,
                       padding: EdgeInsets.symmetric(horizontal: 5.0),
@@ -76,7 +76,7 @@ class FavouritesScreen extends StatelessWidget {
                           lineHeight *
                           fontSize, // Calculate the height based on maxLines, lineHeight and fontSize
                       child: Text(
-                        '${favoritesModel.product!.name}',
+                        '${favoritesModel!.name}',
                         maxLines: maxLines,
                         overflow: TextOverflow.ellipsis,
                         style:
@@ -87,13 +87,13 @@ class FavouritesScreen extends StatelessWidget {
                     Row(
                       children: [
                         Text(
-                          '${favoritesModel.product!.price}',
+                          '${favoritesModel!.price}',
                           style: TextStyle(fontSize: 12.0, color: Colors.blue),
                         ),
                         SizedBox(width: 5.0),
-                        if (1 != 0)
+                        if (favoritesModel.discount != 0)
                           Text(
-                            '${favoritesModel.product!.oldPrice}',
+                            '${favoritesModel!.oldPrice}',
                             style: TextStyle(
                                 fontSize: 10.0,
                                 color: Colors.grey,
@@ -103,12 +103,12 @@ class FavouritesScreen extends StatelessWidget {
                         IconButton(
                           onPressed: () {
                             ShopLayoutCubit.get(context)
-                                .changeFavourites(favoritesModel.product!.id!);
+                                .changeFavourites(favoritesModel!.id!);
                           },
                           icon: CircleAvatar(
                             radius: 15.0,
                             backgroundColor: ShopLayoutCubit.get(context)
-                                    .favourite[favoritesModel.product!.id!]!
+                                    .favourite[favoritesModel!.id!]!
                                 ? Colors.red
                                 : Colors.grey,
                             child: Icon(

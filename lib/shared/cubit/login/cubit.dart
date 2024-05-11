@@ -1,10 +1,10 @@
-import 'package:bloc/bloc.dart';
+
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:shop_app/models/shop_app/login_model.dart';
-import 'package:shop_app/shared/components/components.dart';
 import 'package:shop_app/shared/cubit/login/states.dart';
-import 'package:shop_app/shared/network/end_points.dart';
-import 'package:shop_app/shared/network/remote/dio_helper.dart';
+
+import '../../../models/shop_app/login_model.dart';
+import '../../network/end_points.dart';
+import '../../network/remote/dio_helper.dart';
 
 class ShopLoginCubit extends Cubit<ShopLoginStates> {
   ShopLoginCubit() : super(ShopLoginInitialState());
@@ -36,7 +36,7 @@ class ShopLoginCubit extends Cubit<ShopLoginStates> {
 
     }).catchError((error) {
       print(error.toString());
-      emit(ShopLoginErrorState(error.toString()));
+      emit(ShopLoginErrorState(loginModel!.message!.toString()));
     });
   }
   bool isPassword = true;
