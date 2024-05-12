@@ -9,12 +9,11 @@ import '../../shared/cubit/search/states.dart';
 import '../../shared/cubit/shop_layout/cubit.dart';
 
 class SearchScreen extends StatelessWidget {
-
   var fromKey = GlobalKey<FormState>();
   var searchController = TextEditingController();
   double lineHeight = 1.4;
   double fontSize =
-  14.0; // Assuming a default font size of 14.0 if not specified
+      14.0; // Assuming a default font size of 14.0 if not specified
   int maxLines = 2;
 
   @override
@@ -33,7 +32,6 @@ class SearchScreen extends StatelessWidget {
                 padding: const EdgeInsets.all(20.0),
                 child: Column(
                   children: [
-
                     defaultTextField(
                       controller: searchController,
                       type: TextInputType.text,
@@ -55,23 +53,20 @@ class SearchScreen extends StatelessWidget {
                     SizedBox(
                       height: 10.0,
                     ),
-                    if (state is SearchLoadingState)
-                    LinearProgressIndicator(),
+                    if (state is SearchLoadingState) LinearProgressIndicator(),
                     SizedBox(
                       height: 10.0,
                     ),
                     if (state is SearchSuccessState)
-                    Expanded(
-                      child: ListView.separated(
-                        physics: BouncingScrollPhysics(),
-                        itemBuilder: (context, index) => buildProductItem(
-                            cubit.searchModel!.data!.data![index], context),
-                        separatorBuilder: (context, index) => Divider(),
-                        itemCount: cubit.searchModel!.data!.data!.length,
+                      Expanded(
+                        child: ListView.separated(
+                          physics: BouncingScrollPhysics(),
+                          itemBuilder: (context, index) => buildProductItem(
+                              cubit.searchModel!.data!.data![index], context),
+                          separatorBuilder: (context, index) => Divider(),
+                          itemCount: cubit.searchModel!.data!.data!.length,
+                        ),
                       ),
-                    ),
-
-
                   ],
                 ),
               ),
@@ -81,88 +76,87 @@ class SearchScreen extends StatelessWidget {
       ),
     );
   }
+
   Widget buildProductItem(Product favoritesModel, context) => Padding(
-    padding: const EdgeInsets.all(20.0),
-    child: Container(
-      height: 120.0,
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Stack(
-            alignment: AlignmentDirectional.bottomStart,
+        padding: const EdgeInsets.all(20.0),
+        child: Container(
+          height: 120.0,
+          child: Row(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Image(
-                image: NetworkImage('${favoritesModel!.image}'),
-                width: 120,
-                height: 120.0,
-
-              ),
-              if (favoritesModel!.discount != 0)
-                Container(
-                  color: Colors.red,
-                  padding: EdgeInsets.symmetric(horizontal: 5.0),
-                  child: Text(
-                    'DISCOUNT',
-                    style: TextStyle(fontSize: 8.0, color: Colors.white),
+              Stack(
+                alignment: AlignmentDirectional.bottomStart,
+                children: [
+                  Image(
+                    image: NetworkImage('${favoritesModel!.image}'),
+                    width: 120,
+                    height: 120.0,
                   ),
-                ),
-            ],
-          ),
-          SizedBox(
-              width:
-              10.0), // Add some space between the image and the text (10 pixels
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Container(
-                  height: maxLines *
-                      lineHeight *
-                      fontSize, // Calculate the height based on maxLines, lineHeight and fontSize
-                  child: Text(
-                    '${favoritesModel!.name}',
-                    maxLines: maxLines,
-                    overflow: TextOverflow.ellipsis,
-                    style:
-                    TextStyle(height: lineHeight, fontSize: fontSize),
-                  ),
-                ),
-                Spacer(),
-                Row(
-                  children: [
-                    Text(
-                      '${favoritesModel!.price}',
-                      style: TextStyle(fontSize: 12.0, color: Colors.blue),
-                    ),
-                    SizedBox(width: 5.0),
-
-                    Spacer(), // spacer use to make the space between the two widgets
-                    IconButton(
-                      onPressed: () {
-                        ShopLayoutCubit.get(context)
-                            .changeFavourites(favoritesModel!.id!);
-                      },
-                      icon: CircleAvatar(
-                        radius: 15.0,
-                        backgroundColor: ShopLayoutCubit.get(context)
-                            .favourite[favoritesModel!.id!]!
-                            ? Colors.red
-                            : Colors.grey,
-                        child: Icon(
-                          Icons.favorite_border_outlined,
-                          size: 20.0,
-                          color: Colors.white,
-                        ),
+                  if (favoritesModel!.discount != 0)
+                    Container(
+                      color: Colors.red,
+                      padding: EdgeInsets.symmetric(horizontal: 5.0),
+                      child: Text(
+                        'DISCOUNT',
+                        style: TextStyle(fontSize: 8.0, color: Colors.white),
                       ),
+                    ),
+                ],
+              ),
+              SizedBox(
+                  width:
+                      10.0), // Add some space between the image and the text (10 pixels
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Container(
+                      height: maxLines *
+                          lineHeight *
+                          fontSize, // Calculate the height based on maxLines, lineHeight and fontSize
+                      child: Text(
+                        '${favoritesModel!.name}',
+                        maxLines: maxLines,
+                        overflow: TextOverflow.ellipsis,
+                        style:
+                            TextStyle(height: lineHeight, fontSize: fontSize),
+                      ),
+                    ),
+                    Spacer(),
+                    Row(
+                      children: [
+                        Text(
+                          '${favoritesModel!.price}',
+                          style: TextStyle(fontSize: 12.0, color: Colors.blue),
+                        ),
+                        SizedBox(width: 5.0),
+
+                        Spacer(), // spacer use to make the space between the two widgets
+                        IconButton(
+                          onPressed: () {
+                            ShopLayoutCubit.get(context)
+                                .changeFavourites(favoritesModel!.id!);
+                          },
+                          icon: CircleAvatar(
+                            radius: 15.0,
+                            backgroundColor: ShopLayoutCubit.get(context)
+                                    .favourite[favoritesModel!.id!]!
+                                ? Colors.red
+                                : Colors.grey,
+                            child: Icon(
+                              Icons.favorite_border_outlined,
+                              size: 20.0,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                   ],
                 ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
-      ),
-    ),
-  );
-
+        ),
+      );
 }

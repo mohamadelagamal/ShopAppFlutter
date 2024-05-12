@@ -44,6 +44,10 @@ class ShopRegisterScreen extends StatelessWidget {
 
         },
         builder: (context, state) {
+          // update token
+          var cubit = ShopRegisterCubit.get(context);
+          // update token
+          token = cubit.registerModel!.data!.token!;
           return Scaffold(
               appBar: AppBar(),
               body: Padding(

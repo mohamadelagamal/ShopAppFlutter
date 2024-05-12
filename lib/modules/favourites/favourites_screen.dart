@@ -21,7 +21,7 @@ class FavouritesScreen extends StatelessWidget {
       builder: (context, state) {
         var cubit = ShopLayoutCubit.get(context);
         return ConditionalBuilder(
-          condition: state is! ShopLayoutGetLoadingFavoritesDataState,
+          condition: cubit.favouritesModel != null,
           builder:(context)=> ListView.separated(
             physics: BouncingScrollPhysics(),
             itemBuilder: (context, index) => buildFavouritesItem(

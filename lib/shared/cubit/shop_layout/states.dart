@@ -71,3 +71,6 @@ class ShopLayoutUpdateSuccessProfileDataState extends ShopLayoutStates {
 // 3- error
 class ShopLayoutUpdateErrorProfileDataState extends ShopLayoutStates {}
 
+// check if internet connection is available
+class ShopLayoutCheckInternetConnectionState extends ShopLayoutStates {}
+

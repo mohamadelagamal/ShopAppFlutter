@@ -149,6 +149,7 @@ class ShopLayoutCubit extends Cubit<ShopLayoutStates> {
       emit(ShopLayoutErrorProfileDataState());
     });
   }
+
   void updateUserData({
 required String name,
     required String email,
@@ -170,6 +171,10 @@ required String name,
       print(error.toString());
       emit(ShopLayoutUpdateErrorProfileDataState());
     });
+  }
+  // check if internet connection is available or not to refresh the screen
+  void checkInternetConnection() {
+    emit(ShopLayoutCheckInternetConnectionState());
   }
 
 }
